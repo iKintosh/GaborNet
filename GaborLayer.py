@@ -6,7 +6,7 @@ from torch.nn.modules.conv import _ConvNd
 from torch.nn.modules.utils import _pair
 
 
-class MyGabor(_ConvNd):
+class Gabor(_ConvNd):
 
     def __init__(self, in_channels, out_channels, kernel_size, stride=1,
                  padding=0, dilation=1, groups=1, bias=False):
@@ -15,7 +15,7 @@ class MyGabor(_ConvNd):
         padding = _pair(padding)
         dilation = _pair(dilation)
 
-        super(MyGabor, self).__init__(in_channels, out_channels, kernel_size, stride, padding, dilation, False, _pair(0), groups, bias)
+        super(Gabor, self).__init__(in_channels, out_channels, kernel_size, stride, padding, dilation, False, _pair(0), groups, bias)
 
         self.sigma_x = nn.Parameter(torch.rand(in_channels*out_channels))
         self.sigma_y = nn.Parameter(torch.rand(in_channels*out_channels))
