@@ -1,5 +1,7 @@
 from __future__ import print_function, division
 import os
+from typing import Dict, Any, Union
+
 import torch
 from skimage import io
 import numpy as np
@@ -23,6 +25,6 @@ class DogsCatsDataset(Dataset):
         image = io.imread(img_name)
         if self.transform:
             image = self.transform(image)
-        sample = {'image': image, 'target': target}
+        sample = {'image': image, 'target': target}  # type: Dict[str, Union[int, Any]]
 
         return sample

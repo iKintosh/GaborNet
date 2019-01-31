@@ -3,7 +3,6 @@ import os
 import torch
 from skimage import io
 import numpy as np
-import matplotlib.pyplot as plt
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms, utils
 import pandas as pd
@@ -18,6 +17,12 @@ class AffectivNetDataset(Dataset):
             transform (callable, optional): Optional transform to be applied on a sample.
         """
         self.image_list = pd.read_csv(csv_file)
+        self.image_list = np.array(self.image_list).reshape(len(self.image_list))
+        self.target = []
+        for i in range(len(self.image_list)):
+            item = self.image_list[i].replace('E:/Databases/AffectivNet/ManAnnotated/', '').split()
+            self.image_list[i] = item[0]
+            self.target.append(int(item[1]))
         self.root_dir = root_dir
         self.transform = transform
 
@@ -25,8 +30,9 @@ class AffectivNetDataset(Dataset):
         return len(self.image_list)
 
     def __getitem__(self, idx):
-        img_name = os.path.join(self.root_dir, self.pics_list[idx])
-        target = 0 if 'cat' in self.pics_list[idx] else 1
+        item_path = self.image_list[idx]
+        target = self.target[idx]
+        img_name = os.path.join(self.root_dir, item_path)
         image = io.imread(img_name)
         if self.transform:
             image = self.transform(image)
