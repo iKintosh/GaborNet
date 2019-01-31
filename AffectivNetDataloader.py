@@ -1,11 +1,11 @@
 from __future__ import print_function, division
+
 import os
-import torch
-from skimage import io
+
 import numpy as np
-from torch.utils.data import Dataset, DataLoader
-from torchvision import transforms, utils
 import pandas as pd
+from skimage import io
+from torch.utils.data import Dataset
 
 
 class AffectivNetDataset(Dataset):
@@ -23,6 +23,7 @@ class AffectivNetDataset(Dataset):
             item = self.image_list[i].replace('E:/Databases/AffectivNet/ManAnnotated/', '').split()
             self.image_list[i] = item[0]
             self.target.append(int(item[1]))
+        print(np.unique(self.target))
         self.root_dir = root_dir
         self.transform = transform
 
