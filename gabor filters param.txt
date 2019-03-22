@@ -1,7 +1,0 @@
-{
-	theta : (np.pi/5 - np.pi), 
-	fi : (0.75,1.5), 
-	sigma_x : 2, 
-	sigma_y : 1, 
-	psi : np.pi/2
-}
