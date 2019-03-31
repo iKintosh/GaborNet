@@ -1,2 +1,6 @@
 /raw
 /processed
+/img
+/gifs
+/data
+*.tar

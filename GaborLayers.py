@@ -21,8 +21,8 @@ class GaborSmallConv2d(_ConvNd):
         self.sigma_x = nn.Parameter(0.5*torch.rand(out_channels, in_channels))
         self.sigma_y = nn.Parameter(0.5*torch.rand(out_channels, in_channels))
         self.freq = nn.Parameter((kernel_size[0]/2)*torch.rand(out_channels, in_channels))
-        self.theta = nn.Parameter(3.14*torch.rand(out_channels, in_channels))
-        self.psi = nn.Parameter(6.28*torch.rand(out_channels, in_channels))
+        self.theta = nn.Parameter(0.628*torch.randint(0, 6, (out_channels, in_channels)))
+        self.psi = nn.Parameter(3.14*torch.rand(out_channels, in_channels))
 
     def forward(self, input):
 
@@ -61,16 +61,15 @@ class GaborConv2d(_ConvNd):
 
         super(GaborConv2d, self).__init__(in_channels, out_channels, kernel_size, stride, padding, dilation, False, _pair(0), groups, bias)
         # TODO: подумать над инициализацией параметров
-        self.freq = nn.Parameter((kernel_size[0]/2)*torch.rand(out_channels, in_channels))
-        self.theta = nn.Parameter(3.14*torch.rand(out_channels, in_channels))
-        self.theta2 = nn.Parameter(3.14*torch.rand(out_channels, in_channels))
-        self.psi = nn.Parameter(6.28*torch.rand(out_channels, in_channels))
+        self.freq = nn.Parameter((3.14/2)*1.41**(-torch.randint(0, 5, (out_channels, in_channels))).type(torch.Tensor))
+        self.theta = nn.Parameter((3.14/8)*torch.randint(0, 8, (out_channels, in_channels)).type(torch.Tensor))
+        self.psi = nn.Parameter(3.14*torch.rand(out_channels, in_channels))
         self.sigma = nn.Parameter(3.14/self.freq)
-        self.x0 = torch.ceil(max(kernel_size[0],1))
-        self.y0 = torch.ceil(max(kernel_size[1],1))
+        self.x0 = torch.ceil(torch.Tensor([self.kernel_size[0]/2]))[0]
+        self.y0 = torch.ceil(torch.Tensor([self.kernel_size[1]/2]))[0]
 
     def forward(self, input):
-        y, x = torch.meshgrid([torch.linspace(-x0+1, x0, self.kernel_size[0]), torch.linspace(-y0+1, y0, self.kernel_size[1])])
+        y, x = torch.meshgrid([torch.linspace(-self.x0+1, self.x0, self.kernel_size[0]), torch.linspace(-self.y0+1, self.y0, self.kernel_size[1])])
         x = x.to(device)
         y = y.to(device)
         weight = torch.empty(self.weight.shape, requires_grad=False).to(device)
@@ -86,8 +85,9 @@ class GaborConv2d(_ConvNd):
 
                 g = torch.zeros(y.shape)
 
-                g = torch.exp(-0.5 * ( (rotx ** 2  + roty ** 2) / (sigma + 1e-3) ** 2))
+                g = torch.exp(-0.5 * ((rotx ** 2 + roty ** 2) / (sigma + 1e-3) ** 2))
                 g = g * torch.cos(freq * rotx + psi)
+                g = g / (2*3.14*sigma**2)
                 weight[i, j] = g
                 self.weight.data[i, j] = g
         return F.conv2d(input, weight, self.bias, self.stride, self.padding, self.dilation, self.groups)
