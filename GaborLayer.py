@@ -2,20 +2,15 @@ import torch.nn as nn
 import torch
 from torch.nn.parameter import Parameter
 from torch.nn import functional as F
-from torch.nn.modules.conv import _ConvNd
-from torch.nn.modules.utils import _pair
+from torch.nn.modules.conv import Conv2d
 
 
-class Gabor(_ConvNd):
+class Gabor(Conv2d):
 
     def __init__(self, in_channels, out_channels, kernel_size, stride=1,
                  padding=0, dilation=1, groups=1, bias=False):
-        kernel_size = _pair(kernel_size)
-        stride = _pair(stride)
-        padding = _pair(padding)
-        dilation = _pair(dilation)
 
-        super(Gabor, self).__init__(in_channels, out_channels, kernel_size, stride, padding, dilation, False, _pair(0), groups, bias)
+        super().__init__(in_channels, out_channels, kernel_size, stride, padding, dilation, groups, bias)
 
         self.sigma_x = nn.Parameter(torch.rand(in_channels*out_channels))
         self.sigma_y = nn.Parameter(torch.rand(in_channels*out_channels))
