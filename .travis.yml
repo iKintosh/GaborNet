@@ -5,7 +5,7 @@ install:
   - python setup.py install
   - pip install codecov
   - pip install numpy==1.17.2
-  - pip install install torch
+  - pip install torch
   - pip install torchvision
 script:
   -  chmod +x setup.py
