@@ -32,8 +32,8 @@ setuptools.setup(
         "pytest-cov",
     ],
     install_requires=[
-        "numpy==1.16.5",
+        "numpy",
         "pytest==5.2.1",
-        "torch==1.3.1"
+        "torch"
     ]
 )

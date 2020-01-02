@@ -6,3 +6,8 @@
 *.tar
 
 /Additional Resuorses
+/build/
+/.eggs/
+/dist/
+/GaborNet.egg-info/
+/.coverage
