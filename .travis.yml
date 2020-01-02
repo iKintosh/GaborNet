@@ -8,7 +8,7 @@ install:
   - pip install torch
   - pip install torchvision
 script:
-  -  chmod +x setup.py
-  - ./setup.py test
+  - chmod +x setup.py
+  - python ./setup.py pytest
 after_success:
   - codecov
