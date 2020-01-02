@@ -4,11 +4,13 @@ python:
 install:
   - python setup.py install
   - pip install codecov
+  - pip install pytest pytest-cov
   - pip install numpy==1.17.2
   - pip install torch
   - pip install torchvision
 script:
   - chmod +x setup.py
   - python ./setup.py pytest
+  - pytest --cov=./
 after_success:
   - codecov
