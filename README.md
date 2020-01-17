@@ -4,6 +4,7 @@
 [![Coverage][coverage-image]][coverage-url]
 [![Build Status][travis-badge]][travis-url]
 [![LICENSE][license-image]][license-url]
+[![DeepSource](https://static.deepsource.io/deepsource-badge-light-mini.svg)](https://deepsource.io/gh/iKintosh/GaborNet/?ref=repository-badge)
 
 ## Installation
 GaborNet can be installed via pip from Python 3.7 and above:
