@@ -1,4 +1,3 @@
-import pytest
 import numpy as np
 from GaborNet import GaborConv2d
 import torch
