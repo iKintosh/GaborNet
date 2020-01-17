@@ -1,4 +1,9 @@
  version = 1
+ 
+ test_patterns = [
+  "GaborNet/tests/**",
+  "test_*.py"
+]
 
  [[analyzers]]
  name = "python"
