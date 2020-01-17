@@ -7,7 +7,9 @@
 [![DeepSource](https://static.deepsource.io/deepsource-badge-light-mini.svg)](https://deepsource.io/gh/iKintosh/GaborNet/?ref=repository-badge)
 
 ## Installation
+
 GaborNet can be installed via pip from Python 3.7 and above:
+
 ```bash
 pip install GaborNet
 ```
@@ -45,14 +47,18 @@ class GaborNN(nn.Module):
 net = GaborNN().to(device)
 
 ```
+
 Original research paper (preprint): https://arxiv.org/abs/1904.13204
 
-This research on deep convolutional neural networks proposes a modified architecture that focuses on improving 
-convergence and reducing training complexity. The filters in the first layer of network are constrained to fit the 
-Gabor function. The parameters of Gabor functions are learnable and updated by standard backpropagation techniques. 
-The proposed architecture was tested on several datasets and outperformed the common convolutional networks
+This research on deep convolutional neural networks proposes a modified
+architecture that focuses on improving convergence and reducing training
+complexity. The filters in the first layer of network are constrained to fit the
+Gabor function. The parameters of Gabor functions are learnable and updated by
+standard backpropagation techniques. The proposed architecture was tested on
+several datasets and outperformed the common convolutional networks
 
 ## Citation
+
 Please use this bibtex if you want to cite this repository in your publications:
 
     @misc{gabornet,
@@ -67,7 +73,8 @@ Please use this bibtex if you want to cite this repository in your publications:
 
 [travis-url]: https://travis-ci.com/iKintosh/GaborNet
 [travis-badge]: https://travis-ci.com/iKintosh/GaborNet.svg?branch=master
-[coverage-image]: https://codecov.io/gh/iKintosh/GaborNet/branch/master/graphs/badge.svg
+[coverage-image]:
+  https://codecov.io/gh/iKintosh/GaborNet/branch/master/graphs/badge.svg
 [coverage-url]: https://codecov.io/gh/iKintosh/GaborNet
 [pypi-image]: https://img.shields.io/pypi/v/gabornet.svg
 [pypi-url]: https://pypi.org/project/gabornet
