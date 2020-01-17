@@ -1,6 +1,7 @@
 import numpy as np
-from GaborNet import GaborConv2d
 import torch
+
+from GaborNet import GaborConv2d
 
 
 def test_kenrel_shape():
