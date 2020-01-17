@@ -1,3 +1,8 @@
+branches:
+  only:
+  - master
+  - stable
+
 # Set build language to Python
 language: python
 
