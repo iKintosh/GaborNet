@@ -10,6 +10,7 @@
  runtime_version = "3.x.x"
   [analyzers.meta]
   max_line_length = 120
+  type_checker = "mypy"
 
 # Test coverage analyzer
 [[analyzers]]
