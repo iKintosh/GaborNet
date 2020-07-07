@@ -1,7 +1,6 @@
 # GaborNet
 
 [![PyPI-Status][pypi-image]][pypi-url]
-[![Coverage][coverage-image]][coverage-url]
 [![Build Status][travis-badge]][travis-url]
 [![LICENSE][license-image]][license-url]
 [![DeepSource](https://static.deepsource.io/deepsource-badge-light-mini.svg)](https://deepsource.io/gh/iKintosh/GaborNet/?ref=repository-badge)
@@ -73,9 +72,6 @@ Please use this bibtex if you want to cite this repository in your publications:
 
 [travis-url]: https://travis-ci.com/iKintosh/GaborNet
 [travis-badge]: https://travis-ci.com/iKintosh/GaborNet.svg?branch=master
-[coverage-image]:
-  https://codecov.io/gh/iKintosh/GaborNet/branch/master/graphs/badge.svg
-[coverage-url]: https://codecov.io/gh/iKintosh/GaborNet
 [pypi-image]: https://img.shields.io/pypi/v/gabornet.svg
 [pypi-url]: https://pypi.org/project/gabornet
 [license-image]: https://img.shields.io/badge/License-MIT-yellow.svg
