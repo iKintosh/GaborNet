@@ -15,8 +15,7 @@ from dataset import DogsCatsDataset
 class GaborNN(nn.Module):
     def __init__(self, device):
         super(GaborNN, self).__init__()
-        self.g1 = GaborConv2d(3, 32, kernel_size=(15, 15), stride=1,
-                              device=device)
+        self.g1 = GaborConv2d(3, 32, kernel_size=(15, 15), stride=1, device=device)
         self.c1 = nn.Conv2d(32, 64, kernel_size=(3, 3), stride=2)
         self.c2 = nn.Conv2d(64, 128, kernel_size=(3, 3), stride=2)
         self.fc1 = nn.Linear(128 * 7 * 7, 128)
@@ -37,14 +36,20 @@ class GaborNN(nn.Module):
 
 def main():
     transform = transforms.Compose(
-        [transforms.ToPILImage(), transforms.Resize((256, 256)),
-         transforms.ToTensor(),
-         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+        [
+            transforms.ToPILImage(),
+            transforms.Resize((256, 256)),
+            transforms.ToTensor(),
+            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+        ]
+    )
 
-    train_set = DogsCatsDataset(root_dir=os.path.join('data', 'train'),
-                                transform=transform)
-    test_set = DogsCatsDataset(root_dir=os.path.join('data', 'val'),
-                               transform=transform)
+    train_set = DogsCatsDataset(
+        root_dir=os.path.join("data", "train"), transform=transform
+    )
+    test_set = DogsCatsDataset(
+        root_dir=os.path.join("data", "val"), transform=transform
+    )
 
     train = DataLoader(train_set, batch_size=64, shuffle=True, num_workers=4)
     test = DataLoader(test_set, batch_size=128, shuffle=True, num_workers=4)
@@ -65,7 +70,7 @@ def main():
         net.train()
         for i, data in enumerate(train):
             # get the inputs
-            inputs, labels = data['image'], data['target']
+            inputs, labels = data["image"], data["target"]
 
             # zero the parameter gradients
             optimizer.zero_grad()
@@ -75,13 +80,15 @@ def main():
             loss = criterion(outputs, labels.to(device))
             loss.backward()
             optimizer.step()
-            pred = outputs.max(1, keepdim=True)[1].to('cpu')
+            pred = outputs.max(1, keepdim=True)[1].to("cpu")
             correct += pred.eq(labels.view_as(pred)).sum().item()
 
             # print statistics
             running_loss += loss.item()
-        print('[%d] train_acc: %.3f train_loss: %.3f' % (
-            epoch + 1, correct / len(train_set), running_loss / len(train_set)))
+        print(
+            "[%d] train_acc: %.3f train_loss: %.3f"
+            % (epoch + 1, correct / len(train_set), running_loss / len(train_set))
+        )
         one_layer_gnet_acc_train.append(correct / len(train_set))
 
         running_loss = 0.0
@@ -90,26 +97,30 @@ def main():
             net.eval()
             for i, data in enumerate(test, 0):
                 # get the inputs
-                inputs, labels = data['image'], data['target']
+                inputs, labels = data["image"], data["target"]
 
                 # forward + backward + optimize
                 outputs = net(inputs.to(device))
                 loss = criterion(outputs, labels.to(device))
 
-                pred = outputs.max(1, keepdim=True)[1].to('cpu')
+                pred = outputs.max(1, keepdim=True)[1].to("cpu")
                 correct += pred.eq(labels.view_as(pred)).sum().item()
                 running_loss += loss.item()
-        print('[%d] test_acc: %.3f test_loss: %.3f' % (
-            epoch + 1, correct / len(test_set), running_loss / len(test_set)))
+        print(
+            "[%d] test_acc: %.3f test_loss: %.3f"
+            % (epoch + 1, correct / len(test_set), running_loss / len(test_set))
+        )
         one_layer_gnet_acc_test.append(correct / len(test_set))
 
-    print('Finished Training')
+    print("Finished Training")
 
-    result_dict = {'train_acc': one_layer_gnet_acc_train[-1],
-                   'test_acc': one_layer_gnet_acc_test[-1]}
-    with open('metrics.json', 'w+') as outfile:
+    result_dict = {
+        "train_acc": one_layer_gnet_acc_train[-1],
+        "test_acc": one_layer_gnet_acc_test[-1],
+    }
+    with open("metrics.json", "w+") as outfile:
         json.dump(result_dict, outfile)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
