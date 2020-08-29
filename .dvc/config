@@ -1,0 +1,4 @@
+[core]
+    remote = dogs_cats
+['remote "dogs_cats"']
+    url = gdrive://16rugGb6LDbERDMD97_xNNbb8y6APci8r
