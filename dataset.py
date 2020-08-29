@@ -25,6 +25,9 @@ class DogsCatsDataset(Dataset):
         image = io.imread(img_name)
         if self.transform:
             image = self.transform(image)
-        sample = {"image": image, "target": target}  # type: Dict[str, Union[int, Any]]
+        sample = {
+            "image": image,
+            "target": target
+        }  # type: Dict[str, Union[int, Any]]
 
         return sample
