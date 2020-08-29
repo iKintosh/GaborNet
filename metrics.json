@@ -1,1 +1,4 @@
-{"train_acc": 0.9545, "test_acc": 0.7195}
+{
+  "train_acc": 0.9545,
+  "test_acc": 0.7195
+}
