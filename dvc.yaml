@@ -7,4 +7,4 @@ stages:
     - run_sanity_check.py
     metrics:
     - metrics.json:
-        cache: false
+        cache: true
