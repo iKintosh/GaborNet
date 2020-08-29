@@ -1,7 +1,7 @@
-from __future__ import print_function, division
+from __future__ import division, print_function
 
 import os
-from typing import Dict, Any, Union
+from typing import Any, Dict, Union
 
 from skimage import io
 from torch.utils.data import Dataset
