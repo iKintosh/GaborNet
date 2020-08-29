@@ -11,3 +11,4 @@
 /dist/
 /GaborNet.egg-info/
 /.coverage
+/.ipynb_checkpoints/
