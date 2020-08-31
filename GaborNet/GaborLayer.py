@@ -51,8 +51,7 @@ class GaborConv2d(Module):
         )
         self.theta = Parameter(
             (math.pi / 8)
-            * torch.randint(0, 8, (out_channels, in_channels)
-                            ).type(torch.Tensor),
+            * torch.randint(0, 8, (out_channels, in_channels)).type(torch.Tensor),
             requires_grad=True,
         )
         self.sigma = Parameter(math.pi / self.freq, requires_grad=True)
@@ -61,12 +60,10 @@ class GaborConv2d(Module):
         )
 
         self.x0 = Parameter(
-            torch.ceil(torch.Tensor(
-                [self.kernel_size[0] / 2]))[0], requires_grad=False
+            torch.ceil(torch.Tensor([self.kernel_size[0] / 2]))[0], requires_grad=False
         )
         self.y0 = Parameter(
-            torch.ceil(torch.Tensor(
-                [self.kernel_size[1] / 2]))[0], requires_grad=False
+            torch.ceil(torch.Tensor([self.kernel_size[1] / 2]))[0], requires_grad=False
         )
 
         self.y, self.x = torch.meshgrid(
@@ -115,8 +112,7 @@ class GaborConv2d(Module):
                 roty = -self.x * torch.sin(theta) + self.y * torch.cos(theta)
 
                 g = torch.exp(
-                    -0.5 * ((rotx ** 2 + roty ** 2) /
-                            (sigma + self.delta) ** 2)
+                    -0.5 * ((rotx ** 2 + roty ** 2) / (sigma + self.delta) ** 2)
                 )
                 g = g * torch.cos(freq * rotx + psi)
                 g = g / (2 * math.pi * sigma ** 2)
