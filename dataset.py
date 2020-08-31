@@ -17,11 +17,10 @@ class DogsCatsDataset(Dataset):
 
     def __getitem__(self, idx):
         img_name = os.path.join(self.root_dir, self.pics_list[idx])
-        target = 0 if 'cat' in self.pics_list[idx] else 1
+        target = 0 if "cat" in self.pics_list[idx] else 1
         image = io.imread(img_name)
         if self.transform:
             image = self.transform(image)
-        sample = {'image': image,
-                  'target': target}
+        sample = {"image": image, "target": target}
 
         return sample
