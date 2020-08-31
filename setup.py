@@ -4,8 +4,8 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name='GaborNet',
-    version='0.1.0',
+    name="GaborNet",
+    version="0.1.0",
     author="Andrey Alekseev",
     author_email="ilekseev@gmail.com",
     description="Gabor layer implementation",
@@ -31,9 +31,5 @@ setuptools.setup(
         "pytest-pep257",
         "pytest-cov",
     ],
-    install_requires=[
-        "numpy",
-        "pytest==5.2.1",
-        "torch"
-    ]
+    install_requires=["numpy", "pytest==5.2.1", "torch"],
 )
