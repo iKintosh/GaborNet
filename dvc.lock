@@ -2,13 +2,16 @@ sanity-check:
   cmd: python run_sanity_check.py
   deps:
   - path: GaborNet/GaborLayerNew.py
-    md5: b2d51472cf8f052d2670eac9a70a8082
+    md5: ce749d117558c17d960339a96b39dda5
   - path: GaborNet/GaborLayers.py
     md5: 7f38946a85a853164950b4e9edf6424e
   - path: data
     md5: 45680c6dfa0b2d63cb813bd33995301c.dir
   - path: run_sanity_check.py
-    md5: 0a19e3faf9906da53a8adc15d3f98cad
+    md5: 95809457f2fddaee9032043e8acbb366
+  params:
+    params.yaml:
+      sanity_check.epoch: 10
   outs:
   - path: metrics.json
-    md5: 93892ac06fb0032cf75b9d0f88af6ee3
+    md5: 64a0d48282108a0b17b3ade2141a09f5

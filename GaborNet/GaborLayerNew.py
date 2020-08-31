@@ -88,7 +88,6 @@ class GaborConv2d(Module):
             if not self.is_calculated:
                 self.calculate_weights()
                 self.is_calculated = True
-                print('Calculated weights')
         return self.conv_layer(input_tensor)
 
     def calculate_weights(self):

@@ -6,6 +6,8 @@ stages:
     - GaborNet/GaborLayerNew.py
     - data
     - run_sanity_check.py
+    params:
+      - sanity_check.epoch
     metrics:
     - metrics.json:
         cache: true

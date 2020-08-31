@@ -1,5 +1,7 @@
 import json
 import os
+import time
+import yaml
 
 import torch
 import torch.nn as nn
@@ -35,6 +37,11 @@ class GaborNN(nn.Module):
 
 
 def main():
+    with open("params.yaml", 'r') as stream:
+        try:
+            params = yaml.safe_load(stream)
+        except yaml.YAMLError as exc:
+            print(exc)
     transform = transforms.Compose(
         [transforms.ToPILImage(), transforms.Resize((256, 256)),
          transforms.ToTensor(),
@@ -56,12 +63,15 @@ def main():
 
     one_layer_gnet_acc_train = []
     one_layer_gnet_acc_test = []
+    time_per_image_train = []
+    time_per_image_test = []
 
-    for epoch in range(50):
+    for epoch in range(params['sanity_check']['epoch']):
 
         running_loss = 0.0
         correct = 0
         net.train()
+        start = time.perf_counter()
         for i, data in enumerate(train):
             # get the inputs
             inputs, labels = data['image'], data['target']
@@ -79,12 +89,15 @@ def main():
 
             # print statistics
             running_loss += loss.item()
+        finish = time.perf_counter()
+        time_per_image_train.append((finish - start) / len(train_set))
         print('[%d] train_acc: %.3f train_loss: %.3f' % (
             epoch + 1, correct / len(train_set), running_loss / len(train_set)))
         one_layer_gnet_acc_train.append(correct / len(train_set))
 
         running_loss = 0.0
         correct = 0
+        start = time.perf_counter()
         with torch.no_grad():
             net.eval()
             for i, data in enumerate(test, 0):
@@ -98,6 +111,8 @@ def main():
                 pred = outputs.max(1, keepdim=True)[1].to('cpu')
                 correct += pred.eq(labels.view_as(pred)).sum().item()
                 running_loss += loss.item()
+        finish = time.perf_counter()
+        time_per_image_test.append((finish - start) / len(test_set))
         print('[%d] test_acc: %.3f test_loss: %.3f' % (
             epoch + 1, correct / len(test_set), running_loss / len(test_set)))
         one_layer_gnet_acc_test.append(correct / len(test_set))
@@ -105,7 +120,11 @@ def main():
     print('Finished Training')
 
     result_dict = {'train_acc': one_layer_gnet_acc_train[-1],
-                   'test_acc': one_layer_gnet_acc_test[-1]}
+                   'test_acc': one_layer_gnet_acc_test[-1],
+                   'time_per_image_train': sum(time_per_image_train) / len(
+                       time_per_image_train),
+                   'time_per_image_test': sum(time_per_image_test) / len(
+                       time_per_image_test)}
     with open('metrics.json', 'w+') as outfile:
         json.dump(result_dict, outfile)
 
