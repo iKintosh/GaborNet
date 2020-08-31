@@ -8,15 +8,14 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 from torchvision import transforms
 
-from GaborNet import GaborConv2d
+from GaborNet.GaborLayerNew import GaborConv2d
 from dataset import DogsCatsDataset
 
 
 class GaborNN(nn.Module):
     def __init__(self, device):
         super(GaborNN, self).__init__()
-        self.g1 = GaborConv2d(3, 32, kernel_size=(15, 15), stride=1,
-                              device=device)
+        self.g1 = GaborConv2d(3, 32, kernel_size=(15, 15), stride=1)
         self.c1 = nn.Conv2d(32, 64, kernel_size=(3, 3), stride=2)
         self.c2 = nn.Conv2d(64, 128, kernel_size=(3, 3), stride=2)
         self.fc1 = nn.Linear(128 * 7 * 7, 128)
