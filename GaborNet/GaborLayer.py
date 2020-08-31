@@ -1,4 +1,5 @@
 import math
+from typing import Any
 
 import torch
 from torch.nn import Parameter
@@ -117,7 +118,7 @@ class GaborConv2d(Module):
                 g = g / (2 * math.pi * sigma ** 2)
                 self.conv_layer.weight.data[i, j] = g
 
-    def _forward_unimplemented(self):
+    def _forward_unimplemented(self, *inputs: Any):
         """
         code checkers makes implement this method,
         looks like error in PyTorch

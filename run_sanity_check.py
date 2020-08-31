@@ -2,6 +2,7 @@ import json
 import os
 import time
 from abc import ABC
+from typing import Any
 
 import torch
 import torch.nn as nn
@@ -36,7 +37,7 @@ class GaborNN(nn.Module):
         x = self.fc3(x)
         return x
 
-    def _forward_unimplemented(self):
+    def _forward_unimplemented(self, *inputs: Any):
         """
         code checkers makes implement this method,
         looks like error in PyTorch
@@ -45,9 +46,7 @@ class GaborNN(nn.Module):
 
 
 def main():
-    """
-    check function
-    """
+    """check function"""
     with open("params.yaml", "r") as stream:
         try:
             params = yaml.safe_load(stream)
@@ -119,7 +118,7 @@ def main():
         start = time.perf_counter()
         with torch.no_grad():
             net.eval()
-            for i, data in enumerate(test, 0):
+            for data in test:
                 # get the inputs
                 inputs, labels = data["image"], data["target"]
 
