@@ -108,8 +108,7 @@ def main():
         time_per_image_train.append((finish - start) / len(train_set))
         print(
             "[%d] train_acc: %.3f train_loss: %.3f"
-            % (
-            epoch + 1, correct / len(train_set), running_loss / len(train_set))
+            % (epoch + 1, correct / len(train_set), running_loss / len(train_set))
         )
         one_layer_gnet_acc_train.append(correct / len(train_set))
 
@@ -142,10 +141,8 @@ def main():
     result_dict = {
         "train_acc": one_layer_gnet_acc_train[-1],
         "test_acc": one_layer_gnet_acc_test[-1],
-        "time_per_image_train": sum(time_per_image_train) / len(
-            time_per_image_train),
-        "time_per_image_test": sum(time_per_image_test) / len(
-            time_per_image_test),
+        "time_per_image_train": sum(time_per_image_train) / len(time_per_image_train),
+        "time_per_image_test": sum(time_per_image_test) / len(time_per_image_test),
     }
     with open("metrics.json", "w+") as outfile:
         json.dump(result_dict, outfile)
