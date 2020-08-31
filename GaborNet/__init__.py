@@ -1,1 +1,3 @@
-from .GaborLayers import GaborConv2d
+from .GaborLayer import GaborConv2d
+
+__version__ = "0.2.0"

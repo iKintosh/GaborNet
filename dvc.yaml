@@ -2,9 +2,12 @@ stages:
   sanity-check:
     cmd: python run_sanity_check.py
     deps:
-    - GaborNet/GaborLayers.py
-    - data
-    - run_sanity_check.py
+      - GaborNet/GaborLayers.py
+      - GaborNet/GaborLayer.py
+      - data
+      - run_sanity_check.py
+    params:
+      - sanity_check.epoch
     metrics:
-    - metrics.json:
-        cache: true
+      - metrics.json:
+          cache: true

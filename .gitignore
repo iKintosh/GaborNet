@@ -12,3 +12,5 @@
 /GaborNet.egg-info/
 /.coverage
 /.ipynb_checkpoints/
+/metrics.json
+/poetry.lock
