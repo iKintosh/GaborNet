@@ -18,7 +18,12 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    tests_require=["pytest", "pylint", "pycodestyle", "pep257",],
+    tests_require=[
+        "pytest",
+        "pylint",
+        "pycodestyle",
+        "pep257",
+    ],
     setup_requires=[
         "pytest-runner",
         "pytest-pylint",
