@@ -8,7 +8,8 @@ test_patterns = [
 exclude_patterns = [
     "*.lock",
     "*.toml",
-    "*.yaml"
+    "*.yaml",
+    "sanity_check/**",
 ]
 
 [[analyzers]]
