@@ -10,8 +10,8 @@ import yaml
 from torch.utils.data import DataLoader
 from torchvision import transforms
 
-from GaborNet import GaborConv2d
 from dataset import DogsCatsDataset
+from GaborNet import GaborConv2d
 
 
 class GaborNN(nn.Module):
