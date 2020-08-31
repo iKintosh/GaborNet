@@ -2,7 +2,7 @@ sanity-check:
   cmd: python run_sanity_check.py
   deps:
   - path: GaborNet/GaborLayerNew.py
-    md5: fc7f12d3a5da060d80f30a3ac1196f3c
+    md5: b2d51472cf8f052d2670eac9a70a8082
   - path: GaborNet/GaborLayers.py
     md5: 7f38946a85a853164950b4e9edf6424e
   - path: data
@@ -11,4 +11,4 @@ sanity-check:
     md5: 0a19e3faf9906da53a8adc15d3f98cad
   outs:
   - path: metrics.json
-    md5: c8abce394cbcc7ca00f0ecb813fdf8d5
+    md5: 93892ac06fb0032cf75b9d0f88af6ee3

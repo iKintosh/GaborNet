@@ -21,6 +21,8 @@ class GaborConv2d(Module):
                  ):
         super().__init__()
 
+        self.is_calculated = False
+
         self.conv_layer = Conv2d(in_channels,
                                  out_channels,
                                  kernel_size,
@@ -79,6 +81,17 @@ class GaborConv2d(Module):
         self.register_parameter('weight', self.weight)
 
     def forward(self, input_tensor):
+        if self.training:
+            self.calculate_weights()
+            self.is_calculated = False
+        if not self.training:
+            if not self.is_calculated:
+                self.calculate_weights()
+                self.is_calculated = True
+                print('Calculated weights')
+        return self.conv_layer(input_tensor)
+
+    def calculate_weights(self):
         for i in range(self.conv_layer.out_channels):
             for j in range(self.conv_layer.in_channels):
                 sigma = self.sigma[i, j].expand_as(self.y)
@@ -92,9 +105,7 @@ class GaborConv2d(Module):
 
                 g = torch.exp(
                     -0.5 * ((rotx ** 2 + roty ** 2) / (
-                                sigma + self.delta) ** 2))
+                            sigma + self.delta) ** 2))
                 g = g * torch.cos(freq * rotx + psi)
                 g = g / (2 * math.pi * sigma ** 2)
                 self.conv_layer.weight.data[i, j] = g
-
-        return self.conv_layer(input_tensor)
