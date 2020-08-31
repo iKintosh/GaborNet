@@ -8,10 +8,10 @@ sanity-check:
   - path: data
     md5: 45680c6dfa0b2d63cb813bd33995301c.dir
   - path: run_sanity_check.py
-    md5: 95809457f2fddaee9032043e8acbb366
+    md5: b5c0886b91df66512b010504a821a5c7
   params:
     params.yaml:
       sanity_check.epoch: 10
   outs:
   - path: metrics.json
-    md5: 64a0d48282108a0b17b3ade2141a09f5
+    md5: 94e307584cbaff3cc793981c7b8f6ace
