@@ -2,7 +2,8 @@ import math
 
 import torch
 from torch.nn import Parameter
-from torch.nn.modules import Conv2d, Module
+from torch.nn.modules import Conv2d
+from torch.nn.modules import Module
 
 
 class GaborConv2d(Module):
