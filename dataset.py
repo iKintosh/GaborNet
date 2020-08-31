@@ -1,14 +1,13 @@
 from __future__ import print_function, division
 
 import os
-from typing import Dict, Any, Union
 
 from skimage import io
 from torch.utils.data import Dataset
 
 
 class DogsCatsDataset(Dataset):
-    def __init__(self, root_dir, transform=None):
+    def __init__(self, root_dir: str, transform=None):
         self.root_dir = root_dir
         self.pics_list = os.listdir(self.root_dir)
         self.transform = transform
@@ -23,6 +22,6 @@ class DogsCatsDataset(Dataset):
         if self.transform:
             image = self.transform(image)
         sample = {'image': image,
-                  'target': target}  # type: Dict[str, Union[int, Any]]
+                  'target': target}
 
         return sample

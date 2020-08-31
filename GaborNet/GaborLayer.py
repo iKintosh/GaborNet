@@ -4,8 +4,6 @@ import torch
 from torch.nn import Parameter
 from torch.nn.modules import Module, Conv2d
 
-__version__ = '0.2.0'
-
 
 class GaborConv2d(Module):
     def __init__(self,

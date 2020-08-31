@@ -3,7 +3,7 @@ stages:
     cmd: python run_sanity_check.py
     deps:
     - GaborNet/GaborLayers.py
-    - GaborNet/GaborLayerNew.py
+    - GaborNet/GaborLayer.py
     - data
     - run_sanity_check.py
     params:
