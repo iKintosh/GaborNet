@@ -42,21 +42,17 @@ def main():
             params = yaml.safe_load(stream)
         except yaml.YAMLError as exc:
             print(exc)
-    transform = transforms.Compose(
-        [
-            transforms.ToPILImage(),
-            transforms.Resize((256, 256)),
-            transforms.ToTensor(),
-            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
-        ]
-    )
+    transform = transforms.Compose([
+        transforms.ToPILImage(),
+        transforms.Resize((256, 256)),
+        transforms.ToTensor(),
+        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+    ])
 
-    train_set = DogsCatsDataset(
-        root_dir=os.path.join("data", "train"), transform=transform
-    )
-    test_set = DogsCatsDataset(
-        root_dir=os.path.join("data", "val"), transform=transform
-    )
+    train_set = DogsCatsDataset(root_dir=os.path.join("data", "train"),
+                                transform=transform)
+    test_set = DogsCatsDataset(root_dir=os.path.join("data", "val"),
+                               transform=transform)
 
     train = DataLoader(train_set, batch_size=64, shuffle=True, num_workers=4)
     test = DataLoader(test_set, batch_size=128, shuffle=True, num_workers=4)
@@ -97,10 +93,9 @@ def main():
             running_loss += loss.item()
         finish = time.perf_counter()
         time_per_image_train.append((finish - start) / len(train_set))
-        print(
-            "[%d] train_acc: %.3f train_loss: %.3f"
-            % (epoch + 1, correct / len(train_set), running_loss / len(train_set))
-        )
+        print("[%d] train_acc: %.3f train_loss: %.3f" %
+              (epoch + 1, correct / len(train_set),
+               running_loss / len(train_set)))
         one_layer_gnet_acc_train.append(correct / len(train_set))
 
         running_loss = 0.0
@@ -122,18 +117,21 @@ def main():
         finish = time.perf_counter()
         time_per_image_test.append((finish - start) / len(test_set))
         print(
-            "[%d] test_acc: %.3f test_loss: %.3f"
-            % (epoch + 1, correct / len(test_set), running_loss / len(test_set))
-        )
+            "[%d] test_acc: %.3f test_loss: %.3f" %
+            (epoch + 1, correct / len(test_set), running_loss / len(test_set)))
         one_layer_gnet_acc_test.append(correct / len(test_set))
 
     print("Finished Training")
 
     result_dict = {
-        "train_acc": one_layer_gnet_acc_train[-1],
-        "test_acc": one_layer_gnet_acc_test[-1],
-        "time_per_image_train": sum(time_per_image_train) / len(time_per_image_train),
-        "time_per_image_test": sum(time_per_image_test) / len(time_per_image_test),
+        "train_acc":
+        one_layer_gnet_acc_train[-1],
+        "test_acc":
+        one_layer_gnet_acc_test[-1],
+        "time_per_image_train":
+        sum(time_per_image_train) / len(time_per_image_train),
+        "time_per_image_test":
+        sum(time_per_image_test) / len(time_per_image_test),
     }
     with open("metrics.json", "w+") as outfile:
         json.dump(result_dict, outfile)
