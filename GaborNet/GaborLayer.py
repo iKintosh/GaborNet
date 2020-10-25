@@ -75,10 +75,11 @@ class GaborConv2d(Module):
         self.y = Parameter(self.y)
         self.x = Parameter(self.x)
 
-        self.weight = Parameter(
+        self._weight = Parameter(
             torch.empty(self.conv_layer.weight.shape, requires_grad=True),
             requires_grad=True,
         )
+        self.weight = self._weight.data.detach().clone()
 
         self.register_parameter("freq", self.freq)
         self.register_parameter("theta", self.theta)
@@ -88,7 +89,7 @@ class GaborConv2d(Module):
         self.register_parameter("y_shape", self.y0)
         self.register_parameter("y_grid", self.y)
         self.register_parameter("x_grid", self.x)
-        self.register_parameter("weight", self.weight)
+        self.register_parameter("_weight", self._weight)
 
     def forward(self, input_tensor):
         if self.training:
@@ -98,9 +99,10 @@ class GaborConv2d(Module):
             if not self.is_calculated:
                 self.calculate_weights()
                 self.is_calculated = True
-        return self.conv_layer(input_tensor)
+        return self.conv_layer._conv_forward(input_tensor, self.weight)
 
     def calculate_weights(self):
+        self.weight = self._weight.data.detach().clone()
         for i in range(self.conv_layer.out_channels):
             for j in range(self.conv_layer.in_channels):
                 sigma = self.sigma[i, j].expand_as(self.y)
@@ -116,7 +118,7 @@ class GaborConv2d(Module):
                 )
                 g = g * torch.cos(freq * rotx + psi)
                 g = g / (2 * math.pi * sigma ** 2)
-                self.conv_layer.weight.data[i, j] = g
+                self.weight[i, j] = g
 
     def _forward_unimplemented(self, *inputs: Any):
         """
